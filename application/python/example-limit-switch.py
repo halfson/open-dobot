@@ -17,8 +17,8 @@ https://www.sparkfun.com/products/9322
 
 from dobot import DobotDriver
 
-# driver = DobotDriver('COM4')
-driver = DobotDriver('/dev/tty.usbmodem1421')
+driver = DobotDriver('COM3')
+#driver = DobotDriver('/dev/tty.usbmodem1421')
 driver.Open()
 
 # Rotate base CW at 400 steps/s until limit switch is hit. Then retract CCW at 50 steps/s

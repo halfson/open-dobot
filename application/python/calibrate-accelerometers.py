@@ -35,8 +35,8 @@ import math
 from dobot import DobotDriver
 from dobot import DobotKinematics
 
-# driver = DobotDriver('COM4')
-driver = DobotDriver('/dev/tty.usbmodem1421')
+driver = DobotDriver('COM3')
+#driver = DobotDriver('/dev/tty.usbmodem1421')
 driver.Open()
 # driver.Open(timeout=0.3)
 kinematics = DobotKinematics()

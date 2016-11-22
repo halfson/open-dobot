@@ -9,8 +9,8 @@ from dobot import DobotDriver
 from getch import getch
 import time
 
-# driver = DobotDriver('COM4')
-driver = DobotDriver('/dev/tty.usbmodem1421')
+driver = DobotDriver('COM3')
+#driver = DobotDriver('/dev/tty.usbmodem1421')
 driver.Open()
 successes = 0
 i = 0
