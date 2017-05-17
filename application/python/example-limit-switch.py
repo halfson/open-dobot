@@ -30,9 +30,8 @@ https://www.sparkfun.com/products/9322
 '''
 
 from dobot import DobotDriver
-
-driver = DobotDriver('COM3')
-#driver = DobotDriver('/dev/tty.usbmodem1421')
+driver = DobotDriver('COM5')
+#driver = DobotDriver('/dev/tty0')
 driver.Open()
 
 # Rotate base CW at 400 steps/s until limit switch is hit. Then retract CCW at 50 steps/s
@@ -41,5 +40,9 @@ driver.Open()
 # resistor, e.g. 4.7k, to 5V supply) or be an active device (like a photointerrupter). Pullup is not enabled on that pin.
 
 # CalibrateJoint(self, joint, forwardCommand, backwardCommand, direction, pin, pinMode, pullup)
-# driver.CalibrateJoint(1, driver.freqToCmdVal(1000), driver.freqToCmdVal(50),1,5, 0, 0) İlk çalışan manuel switch ile çalışan kod.
-driver.CalibrateJoint(1, driver.freqToCmdVal(1000), driver.freqToCmdVal(50),1 , 5, 0, 0)
+# driver.CalibrateJoint(1, driver.freqToCmdVal(1000), driver.freqToCmdVal(50),1,5, 0, 0) Manuel switch ile calisan kod
+driver.CalibrateJoint(1, driver.freqToCmdVal(1000), driver.freqToCmdVal(50),1 , 5, 1, 0)
+
+
+
+

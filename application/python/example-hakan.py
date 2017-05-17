@@ -1,108 +1,82 @@
 #! /usr/bin/env python
-'''
-Simple demostration of open-dobot. High-level control via SDK.
-
-It is assumed that no end effectors are installed on the arm (no gripper or sucker, etc.)
-as end effector would crash into the desk Dobot stands on when folowing the examples below.
-If you want to run the following examples with an end effector you would need to adjust all
-coordinates in the commands correspondingly and make sure they are still in arm's in reachable area.
-
-Refer to SDK to find the expected initial arm configuration.
-
-Each move is split into a series of commands to send via driver to FPGA. Each command is
-executed for 20ms. Dobot, thus, executes 50 commands per second.
-
-The commands are queued in Arduino, hence when you stop this example dobot will continue
-to execute until the queue (200 commands) is empty.
-
-
-
-'''
-
-from dobot import Dobot
 import time
-
-# The top Z to go to.
-up = 50
-# The bottom Z to go to.
-down = 50
-# Maximum speed in mm/s
-speed = 400
-# Acceleration in mm/s^2
-acceleration = 300
-
-# dobot = Dobot('/dev/tty.usbmodem1421', debug=True, fake=True)
+from dobot import Dobot
 dobot = Dobot('COM3', debug=True)
-# dobot = Dobot('/dev/tty.usbmodem1421', debug=True)
 
-# Enable calibration routine if you have a limit switch/photointerrupter installed on the arm.
-# See example-switch.py for details.
-# Move both arms to approximately 45 degrees.
-# Re-initialize accelerometers at approx. 45 degrees for the best result. Available on RAMPS only.
+down=49.0
+up=53
+acceleration = 450 # Acceleration in mm/s^2
+speed = 450
+dobot.CalibrateJoint(1, dobot.freqToCmdVal(50), dobot.freqToCmdVal(50), 1, 5, 1, 0)
+dobot.InitializeAccelerometers()
 
-# dobot.MoveWithSpeed(260.0, 0.0, 85, 700, acceleration)
-# time.sleep(2)
-# dobot.InitializeAccelerometers()
-# dobot.CalibrateJoint(1, dobot.freqToCmdVal(2000), dobot.freqToCmdVal(50), 1, 5, 1, 0)
+testCycleNumber = 1000
 
-#Line
-dobot.MoveWithSpeed(200.0, 80.0, up, speed, acceleration)
-#dobot.MoveWithSpeed(200.0, 80.0, down, speed, acceleration)
-#dobot.MoveWithSpeed(200.0, -90.0, down, speed, acceleration)
-#dobot.MoveWithSpeed(200.0, -90.0, up, speed, acceleration)
-
-# dobot.MoveWithSpeed(200.0, -90.0, down, speed, acceleration)
-# dobot.MoveWithSpeed(200.0, 80.0, down, speed, acceleration)
-# dobot.MoveWithSpeed(200.0, 80.0, up, speed, acceleration)
-# dobot.MoveWithSpeed(200.0, -90.0, up, speed, acceleration)
-
-# Rectangle with zig-zag inside
-# dobot.MoveWithSpeed(170.0, -90.0, up, speed, acceleration)
-# dobot.MoveWithSpeed(170.0, -90.0, down, speed, acceleration)
-#dobot.MoveWithSpeed(170.0, 80.0, down, speed, acceleration)
-#dobot.MoveWithSpeed(230.0, 80.0, down, speed, acceleration)
-#dobot.MoveWithSpeed(230.0, -90.0, down, speed, acceleration)
-#dobot.MoveWithSpeed(170.0, -90.0, down, speed, acceleration)
-# x = 230
-#y = 0
-#for y in range(-90, 81, 5):
-#	if x == 170:
-#		x = 230
-#	else:
-#		x = 170
-#	dobot.MoveWithSpeed(x, y, down, speed, acceleration)
+# # PARS
+# ph4x1 = 110.5  # phone 4 x1 position
+# ph4x2 = ph4x1 + 123.4  # phone 4 x2 position #real length = 12.1cm
+# ph4x4 = ph4x1 + 1.0
 #
-#dobot.MoveWithSpeed(x, y, up, speed, acceleration)
-#dobot.MoveWithSpeed(200.0, -90.0, up, speed, acceleration)
-# Jog
-#while True:
-# 	dobot.MoveWithSpeed(200.0, 80.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 80.0, down, speed, acceleration)
- #	dobot.MoveWithSpeed(200.0, 80.0, up, speed, acceleration)
- #	dobot.MoveWithSpeed(200.0, 80.0, 200, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -80.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -80.0, down, speed, acceleration)
-#	dobot.MoveWithSpeed(200.0, -80.0, up, speed, acceleration)
+# ph4y1 = 133.0  # phone 4 y1 position
+# ph4y2 = ph4y1 - 2.7  # ph4y2 = ph4y1 + 68.1  # phone 4 y2 position #real length = 6.8cm
+# ph4y4 = ph4y1 + 67.6
 
-# Dashed line
-# while True:
-# 	dobot.MoveWithSpeed(200.0, 80.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 80.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 70.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 70.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 40.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 40.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 30.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 30.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 0.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, 0.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -10.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -10.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -40.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -40.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -50.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -50.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -80.0, up, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -80.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -90.0, down, speed, acceleration)
-# 	dobot.MoveWithSpeed(200.0, -90.0, up, speed, acceleration)
+# ORCA
+ph4x1 = 108.5  # phone 4 x1 position
+ph4x2 = ph4x1 + 123.3  # phone 4 x2 position #real length = 12.1cm
+ph4x4 = ph4x1 + 1.1
+
+ph4y1 = 133.0  # phone 4 y1 position
+ph4y2 = ph4y1 - 2.7  # ph4y2 = ph4y1 + 68.1  # phone 4 y2 position #real length = 6.8cm
+ph4y4 = ph4y1 + 67.7
+
+shiftY = ph4y2 - ph4y1
+shiftX = ph4x4 - ph4x1
+
+numberOfSquareX = 16
+numberOfSquareY = 9
+
+xRange = (ph4x2-ph4x1)/numberOfSquareX
+yRange = (ph4y4-ph4y1)/numberOfSquareY
+
+xBuffer = (xRange/2.0)
+yBuffer = (yRange/2.0)
+
+def pushTouchTestStartButton():
+    dobot.MoveWithSpeed(ph4x1 + 105, ph4y1 + 34, up, speed, acceleration)
+    dobot.MoveWithSpeed(ph4x1 + 105, ph4y1 + 34, down, speed, acceleration)
+    dobot.MoveWithSpeed(ph4x1 + 105, ph4y1 + 34, up, speed, acceleration)
+def TouchTest(x1,y1,xxRange,yyRange,xxBuffer,yyBuffer,upp,downn,speedd,accelerationn,numberOfSquareXX,numberOfSquareYY,shiftXX,shiftYY):
+
+    for stepX in range(0,numberOfSquareXX):
+        x = x1 + xxRange * stepX + xxBuffer
+        for stepY in range(0, numberOfSquareYY):
+            y = y1 + yyRange * stepY + yyBuffer + stepX * (shiftYY/numberOfSquareXX)
+            x = x + shiftXX/numberOfSquareYY
+
+            dobot.MoveWithSpeed(x, y, upp, speedd, accelerationn)
+            dobot.MoveWithSpeed(x, y, downn, speed, accelerationn)
+            dobot.MoveWithSpeed(x, y, upp, speed, accelerationn)
+def my_range(start, end, step):
+    while start <= end:
+        yield start
+        start += step
+for cycle in range(0, testCycleNumber):
+    print testCycleNumber
+    pushTouchTestStartButton()
+    TouchTest(ph4x1,ph4y1,xRange,yRange,xBuffer,yBuffer, up, down,speed, acceleration, numberOfSquareX,numberOfSquareY,shiftX, shiftY)
+    dobot.Wait(10)
+#
+# dobot.MoveWithSpeed(ph4x1, ph4y1, up, speed, acceleration)#start point control x1,y1
+# raw_input("Press Enter to continue...")
+#
+# dobot.MoveWithSpeed(ph4x2, ph4y2, up, speed, acceleration)#x2,y2
+# raw_input("Press Enter to continue...")
+#
+# dobot.MoveWithSpeed(ph4x4, ph4y4, up, speed, acceleration)#x4,y4
+# raw_input("Press Enter to continue...")
+
+#go to home
+#raw_input("Press Enter to go home...")
+dobot.MoveWithSpeed(260, -20, 80, speed, acceleration)
+

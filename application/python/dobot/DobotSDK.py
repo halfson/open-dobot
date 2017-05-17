@@ -40,7 +40,7 @@ if sys.version_info > (3,):
 	long = int
 
 # See calibrate-accelerometers.py for details
-accelOffsets = (1024, 1024)
+accelOffsets = (1037,1016)
 
 # Backlash in the motor reduction gears is actually 22 steps, but 5 is visually unnoticeable.
 # It is a horrible thing to compensate a bad backlash in software, but the only other
@@ -542,7 +542,7 @@ class Dobot:
 			yint = []
 			locs, labels = self._plt.yticks()
 			for each in locs:
-			    yint.append(int(each))
+				yint.append(int(each))
 			self._plt.yticks(yint)
 			self._plt.show()
 
@@ -583,4 +583,9 @@ class Dobot:
 	
 	def ValveOn(self, on):
 		return self._driver.ValveOn(on)
+
+
+
+
+
 
