@@ -29,7 +29,8 @@ https://www.sparkfun.com/products/9322
 		@return True if command succesfully received, False otherwise.
 '''
 
-from dobot import DobotDriver
+from application.python import DobotDriver
+
 driver = DobotDriver('COM5')
 #driver = DobotDriver('/dev/tty0')
 driver.Open()

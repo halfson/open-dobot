@@ -24,12 +24,11 @@ Version: 1.2.2
 
 License: MIT
 """
-
 import serial
 import threading
 import time
 from serial import SerialException
-from dobot.DobotDriver import DobotDriver
+from DobotDriver import DobotDriver
 from dobot.DobotKinematics import *
 import timeit
 import math
@@ -104,7 +103,7 @@ class Dobot:
 			print('')
 
 	def InitializeAccelerometers(self):
-		print("--=========--")
+		#print("--=========--")
 		print("Initializing accelerometers")
 		if self._driver.isFpga():
 			# In FPGA v1.0 SPI accelerometers are read only when Arduino boots. The readings
@@ -157,13 +156,13 @@ class Dobot:
 		self._rearSteps = long((rearAngle / piTwo) * rearArmActualStepsPerRevolution + 0.5)
 		self._frontSteps = long((frontAngle / piTwo) * frontArmActualStepsPerRevolution + 0.5)
 		self._driver.SetCounters(self._baseSteps, self._rearSteps, self._frontSteps)
-		print("Initializing with steps:", self._baseSteps, self._rearSteps, self._frontSteps)
-		print("Reading back what was set:", self._driver.GetCounters())
+		#print("Initializing with steps:", self._baseSteps, self._rearSteps, self._frontSteps)
+		#print("Reading back what was set:", self._driver.GetCounters())
 		currBaseAngle = piTwo * self._baseSteps / baseActualStepsPerRevolution
 		currRearAngle = piHalf - piTwo * self._rearSteps / rearArmActualStepsPerRevolution
 		currFrontAngle = piTwo * self._frontSteps / frontArmActualStepsPerRevolution
-		print('Current estimated coordinates:', self._kinematics.coordinatesFromAngles(currBaseAngle, currRearAngle, currFrontAngle))
-		print("--=========--")
+		#print('Current estimated coordinates:', self._kinematics.coordinatesFromAngles(currBaseAngle, currRearAngle, currFrontAngle))
+		#print("--=========--")
 
 	def _moveArmToAngles(self, baseAngle, rearArmAngle, frontArmAngle, duration):
 		self._baseAngle = baseAngle
@@ -379,7 +378,7 @@ class Dobot:
 		else:
 			accelf = float(accel)
 
-		print("--=========--")
+		#print("--=========--")
 		self._debug('maxVel', maxVel)
 		self._debug('accelf', accelf)
 
@@ -583,6 +582,7 @@ class Dobot:
 	
 	def ValveOn(self, on):
 		return self._driver.ValveOn(on)
+
 
 
 

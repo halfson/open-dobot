@@ -4,7 +4,7 @@ An example how to use gripper.
 
 '''
 
-from dobot import Dobot
+import dobot
 import time
 
 # The top Z to go to.

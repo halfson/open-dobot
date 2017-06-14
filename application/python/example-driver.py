@@ -19,8 +19,9 @@ number_of_steps = 600Hz * 20ms = 600 * 0.02 = 12
 
 '''
 
-from dobot import DobotDriver
 import time
+
+from application.python import DobotDriver
 
 driver = DobotDriver('COM3')
 #driver = DobotDriver('/dev/tty.usbmodem1421')

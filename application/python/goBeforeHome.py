@@ -2,7 +2,7 @@
 
 import time
 from dobot import Dobot
-dobot = Dobot('COM3', debug=True)
+dobot = Dobot('COM5', debug=True)
 
 
 
@@ -13,4 +13,4 @@ speed = 50
 #go home
 #raw_input("Press Enter to go home...")
 #dobot.MoveWithSpeed(140, -200, 80, speed, acceleration)
-dobot.MoveWithSpeed(140, -210, 80, speed, acceleration)
+dobot.MoveWithSpeed(140, -210, 200, speed, acceleration)

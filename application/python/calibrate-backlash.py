@@ -5,9 +5,10 @@ Allows to visually calibrate motor reduction gear backlash.
 The backlash is hardcoded in SDK. Use only if you know what you're doing.
 '''
 
-from dobot import DobotDriver
-from getch import getch
 import time
+
+from application.python import DobotDriver
+from getch import getch
 
 driver = DobotDriver('COM5')
 #driver = DobotDriver('/dev/tty.usbmodem1421')
